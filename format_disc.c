@@ -8,7 +8,7 @@ void init_format_info(fmt_info_t *spec)
 {
 	if (spec)
 	{
-		spec->sp_prec = 1;
+		spec->_prs = 1;
 		spec->width = 0;
 		spec->spec = FALSE;
 		spec->is_long_double = FALSE;

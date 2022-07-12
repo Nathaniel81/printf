@@ -77,16 +77,16 @@ void set_precision(const char *str, va_list args,
 	fmt_info->is_precision_set = TRUE;
 	if (*(str + *i) == '*')
 	{
-		fmt_info->sp_prec = va_arg(args, int);
+		fmt_info->_prs = va_arg(args, int);
 		(*i)++;
 	}
 	else if (is_digit(*(str + *i)))
 	{
-		*i += set_number(str + *i, &(fmt_info->sp_prec));
+		*i += set_number(str + *i, &(fmt_info->_prs));
 	}
 	else if (is_specifier(*(str + *i)))
 	{
-		fmt_info->sp_prec = 0;
+		fmt_info->_prs = 0;
 		/* (*i)--; */
 	}
 	else

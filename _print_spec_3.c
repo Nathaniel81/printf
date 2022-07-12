@@ -25,7 +25,7 @@ void convert_fmt_fF(va_list *args_list, fmt_info_t *fmt_info)
 		if (str == NULL)
 		{
 			str = float_to_str(flt_info, FALSE);
-			str = round_float(str, fmt_info->is_precision_set ? fmt_info->sp_prec : 6, T);
+			str = round_float(str, fmt_info->is_precision_set ? fmt_info->_prs : 6, T);
 			num_len = str_len(str) + ((fmt_info->show_sign && num >= 0) ? 1 : 0);
 			max_w = MAX(fmt_info->width, num_len);
 			count_z = (max_w - num_len) * !fmt_info->left * (fmt_info->pad == '0');

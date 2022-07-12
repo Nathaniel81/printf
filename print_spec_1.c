@@ -24,7 +24,7 @@ void convert_fmt_di(va_list *args_list, fmt_info_t *fmt_info)
 	if (str)
 	{
 		inv_plus = num >= 0 && (fmt_info->show_sign || fmt_info->space) ? 1 : 0;
-		if (fmt_info->is_precision_set && !fmt_info->sp_prec && !num)
+		if (fmt_info->is_precision_set && !fmt_info->_prs && !num)
 		{
 			print_repeat(' ', fmt_info->width);
 		}
@@ -32,7 +32,7 @@ void convert_fmt_di(va_list *args_list, fmt_info_t *fmt_info)
 		{
 			num_len = str_len(str) + (inv_plus ? 1 : 0);
 			if (fmt_info->is_precision_set)
-				zeros_count = MAX(fmt_info->sp_prec + (inv_plus || num < 0 ? 1 : 0),
+				zeros_count = MAX(fmt_info->_prs + (inv_plus || num < 0 ? 1 : 0),
 					num_len) - num_len;
 			else
 				zeros_count = fmt_info->pad == '0' ? MAX(fmt_info->width,
@@ -59,7 +59,7 @@ void convert_fmt_di(va_list *args_list, fmt_info_t *fmt_info)
  */
 void convert_fmt_xX(va_list *args_list, fmt_info_t *fmt_info)
 {
-	int i, len = 0, zeros_count = 0, max_w, max_p, num_len;
+	int i, len = 0, zeros_count = 0, max_w, max_p, l1;
 	unsigned long num;
 	char *str;
 
@@ -72,16 +72,16 @@ void convert_fmt_xX(va_list *args_list, fmt_info_t *fmt_info)
 	str = u_long_to_hex(num, fmt_info->spec == 'X');
 	if (str)
 	{
-		if (fmt_info->is_precision_set && !fmt_info->sp_prec && !num)
+		if (fmt_info->is_precision_set && !fmt_info->_prs && !num)
 		{
 			print_repeat(' ', fmt_info->width);
 		}
 		else
 		{
-			num_len = str_len(str) + (num ? fmt_info->alt * 2 : 0);
-			max_w = MAX(fmt_info->width, num_len), max_p = MAX(fmt_info->sp_prec, num_len);
-			zeros_count = (max_p - num_len) * !fmt_info->left;
-			len = max_w - (NO_NEG(zeros_count) + num_len);
+			l1 = str_len(str) + (num ? fmt_info->alt * 2 : 0);
+			max_w = MAX(fmt_info->width, l1), max_p = MAX(fmt_info->_prs, l1);
+			zeros_count = (max_p - l1) * !fmt_info->left;
+			len = max_w - (NO_NEG(zeros_count) + l1);
 			for (i = 0; !fmt_info->left && i < len; i++)
 				_putchar(fmt_info->pad);
 			if (fmt_info->alt && num)
@@ -120,7 +120,7 @@ void convert_fmt_o(va_list *args_list, fmt_info_t *fmt_info)
 	str = long_to_oct(num);
 	if (str)
 	{
-		if (fmt_info->is_precision_set && !fmt_info->sp_prec && !num)
+		if (fmt_info->is_precision_set && !fmt_info->_prs && !num)
 		{
 			print_repeat(' ', fmt_info->width);
 		}
@@ -128,7 +128,7 @@ void convert_fmt_o(va_list *args_list, fmt_info_t *fmt_info)
 		{
 			num_len = NO_LESS(str_len(str), 1);
 			max_w = MAX(fmt_info->width, num_len);
-			max_p = MAX(fmt_info->sp_prec, num_len);
+			max_p = MAX(fmt_info->_prs, num_len);
 			zeros_count = (max_p - num_len) * !fmt_info->left;
 			len = max_w - (NO_NEG(zeros_count) + num_len);
 			for (i = 0; !fmt_info->left && i < len; i++)
@@ -174,7 +174,7 @@ void convert_fmt_u(va_list *args_list, fmt_info_t *fmt_info)
 		{
 			num_len = str_len(str);
 			max_w = MAX(fmt_info->width, num_len);
-			max_p = MAX(fmt_info->sp_prec, num_len);
+			max_p = MAX(fmt_info->_prs, num_len);
 			zeros_count = (max_p - num_len) * !fmt_info->left;
 			len = max_w - (NO_NEG(zeros_count) + num_len);
 			for (i = 0; !fmt_info->left && i < len; i++)

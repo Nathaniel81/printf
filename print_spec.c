@@ -83,8 +83,8 @@ void convert_fmt_s(va_list *args_list, fmt_info_t *fmt_info)
 	char null_str[] = "(null)";
 
 	str = str ? str : null_str;
-	len = fmt_info->is_precision_set && fmt_info->sp_prec >= 0
-		? fmt_info->sp_prec : str_len(str);
+	len = fmt_info->is_precision_set && fmt_info->_prs >= 0
+		? fmt_info->_prs : str_len(str);
 	if (!fmt_info->left)
 	{
 		for (i = 0; i < MAX(len, fmt_info->width) - len; i++)

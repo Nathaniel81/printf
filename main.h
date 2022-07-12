@@ -27,12 +27,12 @@
 #define NO_LESS(a, b) ((a) < (b) ? (b) : ((a)))
 #define TO_UPPER(c) ((c) >= 'a' && (c) <= 'z' ? (c) - 6 - 26 : (c))
 #define TO_LOWER(c) ((c) >= 'A' && (c) <= 'Z' ? (c) + 6 + 26 : (c))
-#define FMT_PREC_EMPTY(fmt_inf) (fmt_inf->is_precision_set && !fmt_inf->sp_prec)
+#define FMT_PREC_EMPTY(fmt_inf) (fmt_inf->is_precision_set && !fmt_inf->_prs)
 
 /**
  * struct format_info - Contains information about the options
  * and flags that appear in a conversion specifier instance.
- * @sp_prec: specified precision
+ * @_prs: specified precision
  * @width: The length of the formatted data
  * @spec: The given conversion specifier character
  * @is_long_double: Indicates the presence of the 'L' length modifier
@@ -51,7 +51,7 @@
  */
 struct format_info
 {
-	int sp_prec;
+	int _prs;
 	int width;
 	char spec;
 	char is_long_double;
